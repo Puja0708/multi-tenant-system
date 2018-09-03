@@ -34,7 +34,6 @@ ALLOWED_HOSTS = []
 # Application definition
 SHARED_APPS = (
     'tenant_schemas',  # Mandatory
-    'customers',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,18 +41,21 @@ SHARED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'safedelete',
+    'employees',
+    'teams',
 )
 
 
 TENANT_APPS = (
     'django.contrib.contenttypes',
     'rest_framework',
-    'contacts',
+    'companies',
 )
 
 INSTALLED_APPS = list(SHARED_APPS) + [app for app in TENANT_APPS if app not in SHARED_APPS]
 
-TENANT_MODEL = 'customers.Client'
+TENANT_MODEL = 'companies.Company'
 
 # INSTALLED_APPS = [
 #     'django.contrib.admin',
@@ -110,12 +112,18 @@ WSGI_APPLICATION = 'multi_tenant_system.wsgi.application'
 #     }
 # }
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'tenant_schemas.postgresql_backend',
-        'NAME': getattr(properties, 'vetted')
-    }
+        'NAME': 'vetted',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '5432'
+    },
 }
+DATABASES['secondary'] = DATABASES['default']  # can be used if slave is setup
 
 DATABASE_ROUTERS = (
     'tenant_schemas.routers.TenantSyncRouter',
