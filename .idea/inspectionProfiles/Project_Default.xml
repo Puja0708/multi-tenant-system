@@ -1,0 +1,27 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="false" level="WARNING" enabled_by_default="false">
+      <option name="ignoredPackages">
+        <value>
+          <list size="6">
+            <item index="0" class="java.lang.String" itemvalue="webargs" />
+            <item index="1" class="java.lang.String" itemvalue="marshmallow" />
+            <item index="2" class="java.lang.String" itemvalue="reportlab" />
+            <item index="3" class="java.lang.String" itemvalue="transitions" />
+            <item index="4" class="java.lang.String" itemvalue="marshmallow-sqlalchemy" />
+            <item index="5" class="java.lang.String" itemvalue="SQLAlchemy" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="global_crons.order_data_report.order" />
+          <option value="payment_gateways.ThirdPartyPayments.*" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
