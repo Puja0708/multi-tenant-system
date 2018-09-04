@@ -32,28 +32,62 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-SHARED_APPS = (
-    'tenant_schemas',  # Mandatory
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django_extensions',
-    'safedelete',
-    'employees',
-    'teams',
-)
+# SHARED_APPS = (
+#     'tenant_schemas',  # Mandatory
+#     'django.contrib.admin',
+#     'django.contrib.auth',
+#     'django.contrib.contenttypes',
+#     'django.contrib.sessions',
+#     'django.contrib.messages',
+#     'django.contrib.staticfiles',
+#     'django_extensions',
+#     'safedelete',
+#     'employees',
+#     'teams',
+# )
 
+
+SHARED_APPS = (
+    'tenant_schemas',  # mandatory, should always be before any django app
+    'companies', # you must list the app where your tenant model resides in
+    # 'employees',
+    # 'teams',
+
+    'django.contrib.contenttypes',
+
+    # everything below here is optional
+    'django.contrib.auth',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.messages',
+    'django.contrib.admin',
+)
 
 TENANT_APPS = (
     'django.contrib.contenttypes',
-    'rest_framework',
-    'companies',
 )
 
-INSTALLED_APPS = list(SHARED_APPS) + [app for app in TENANT_APPS if app not in SHARED_APPS]
+INSTALLED_APPS = (
+    'tenant_schemas',  # mandatory, should always be before any django app
+    'companies',
+    'django.contrib.contenttypes',
+    'django.contrib.auth',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.messages',
+    'django.contrib.admin',
+    # 'myapp.hotels',
+    # 'myapp.houses',
+)
+
+
+# TENANT_APPS = (
+#     'django.contrib.contenttypes',
+#     'rest_framework',
+#     'companies',
+# )
+
+# INSTALLED_APPS = list(SHARED_APPS) + [app for app in TENANT_APPS if app not in SHARED_APPS]
 
 TENANT_MODEL = 'companies.Company'
 
@@ -67,6 +101,7 @@ TENANT_MODEL = 'companies.Company'
 # ]
 
 MIDDLEWARE_CLASSES = [
+    'tenant_schemas.middleware.TenantMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -75,7 +110,6 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'tenant_schemas.middleware.TenantMiddleware',
 ]
 
 ROOT_URLCONF = 'multi_tenant_system.urls'
@@ -87,10 +121,10 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.debug',
+                # 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+                # 'django.contrib.messages.context_processors.messages',
             ],
         },
     },
@@ -99,6 +133,9 @@ TEMPLATES = [
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',   
 )
+
+PG_EXTRA_SEARCH_PATHS = ['extensions']
+
 WSGI_APPLICATION = 'multi_tenant_system.wsgi.application'
 
 
@@ -116,7 +153,7 @@ WSGI_APPLICATION = 'multi_tenant_system.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'tenant_schemas.postgresql_backend',
-        'NAME': 'vetted',
+        'NAME': 'multi_tenant',
         'USER': '',
         'PASSWORD': '',
         'HOST': 'localhost',
