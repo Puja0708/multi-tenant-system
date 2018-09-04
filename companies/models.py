@@ -18,6 +18,3 @@ class Company(SafeDeleteModel):
     modified_timestamp = models.IntegerField(null=True)
 
     auto_create_schema = True
-
-    class Meta:
-        managed = True

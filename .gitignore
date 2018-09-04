@@ -3,7 +3,7 @@ venv/
 
 # IDE Related
 .idea/
-.idea/*
+.idea/workspace.xml
 
 # pycache
 */__pycache__/*
