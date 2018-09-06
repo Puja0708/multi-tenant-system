@@ -12,16 +12,15 @@ from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.mixins import CreateModelMixin, UpdateModelMixin, ListModelMixin
 
 
-class CompanyDetail(CreateModelMixin, ListModelMixin,  GenericViewSet):
+class CompanyViewSet(CreateModelMixin, ListModelMixin, GenericViewSet):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'profile_detail.html'
     query_set = Company.objects.all()
-    # serializer_class = CompanySerializer
+    serializer_class = CompanySerializer
 
     def get(self, request):
         form = CreateCompanyForm()
         return render(request, 'profile_list.html', {'form': form})
-
 
     def post(self, request):
         model_form = CreateCompanyForm(request.POST)
