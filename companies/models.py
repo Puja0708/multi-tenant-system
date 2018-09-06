@@ -16,17 +16,7 @@ class Company(TenantMixin):
     # entry_user = models.ForeignKey(null=False)  # TODO : populate using django auth
     # modified_user = models.ForeignKey(null=True)
 
-    entry_timestamp = models.IntegerField(null=False)  # TODO : use mixins
+    entry_timestamp = models.IntegerField(null=True)  # TODO : use mixins
     modified_timestamp = models.IntegerField(null=True)
 
     auto_create_schema = True
-
-
-# class Client(TenantMixin):
-#     name = models.CharField(max_length=100)
-#     paid_until =  models.DateField()
-#     on_trial = models.BooleanField()
-#     created_on = models.DateField(auto_now_add=True)
-#
-#     # default true, schema will be automatically created and synced when it is saved
-#     auto_create_schema = True

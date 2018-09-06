@@ -4,7 +4,8 @@ venv/
 # IDE Related
 .idea/
 .idea/workspace.xml
-
+.idea/modules.xml
+.idea/multi_tenant_system.iml
 # pycache
 */__pycache__/*
 */*/__pycache__/*

@@ -15,7 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from companies.views import CompanyDetail
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^test/', CompanyDetail.as_view({'get': 'get', 'post': 'post'})),
+    # url(r'^your-name/', get_name)
 ]
