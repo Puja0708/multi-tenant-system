@@ -71,22 +71,16 @@ TENANT_APPS = (
 INSTALLED_APPS = (
     'tenant_schemas',  # mandatory, should always be before any django app
     'companies',
+    'employees',
+    'teams',
     'django.contrib.contenttypes',
     'django.contrib.auth',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.admin',
-    # 'myapp.hotels',
-    # 'myapp.houses',
 )
 
-
-# TENANT_APPS = (
-#     'django.contrib.contenttypes',
-#     'rest_framework',
-#     'companies',
-# )
 
 # INSTALLED_APPS = list(SHARED_APPS) + [app for app in TENANT_APPS if app not in SHARED_APPS]
 

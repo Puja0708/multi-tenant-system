@@ -4,6 +4,7 @@ from django.db import models
 from safedelete.models import SafeDeleteModel
 from tenant_schemas.models import TenantMixin
 
+from multi_tenant_system.utils import get_current_utc_timestamp
 
 
 class Company(TenantMixin):
@@ -16,7 +17,7 @@ class Company(TenantMixin):
     # entry_user = models.ForeignKey(null=False)  # TODO : populate using django auth
     # modified_user = models.ForeignKey(null=True)
 
-    entry_timestamp = models.IntegerField(null=True)  # TODO : use mixins
+    entry_timestamp = models.IntegerField(default=get_current_utc_timestamp)  # TODO : use mixins
     modified_timestamp = models.IntegerField(null=True)
 
     auto_create_schema = True
