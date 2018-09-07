@@ -10,6 +10,8 @@ from companies.serializers import CompanySerializer
 
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.mixins import CreateModelMixin, UpdateModelMixin, ListModelMixin
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework import permissions
 
 
 class CompanyViewSet(CreateModelMixin, ListModelMixin, GenericViewSet):
@@ -17,6 +19,9 @@ class CompanyViewSet(CreateModelMixin, ListModelMixin, GenericViewSet):
     template_name = 'profile_detail.html'
     query_set = Company.objects.all()
     serializer_class = CompanySerializer
+    authentication_classes = (SessionAuthentication, BasicAuthentication)
+    permission_classes = (permissions.IsAdminUser,)  # since only admin user can view/ create companies 
+
 
     def get(self, request):
         form = CreateCompanyForm()
