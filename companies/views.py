@@ -20,7 +20,7 @@ class CompanyViewSet(CreateModelMixin, ListModelMixin, GenericViewSet):
     query_set = Company.objects.all()
     serializer_class = CompanySerializer
     authentication_classes = (SessionAuthentication, BasicAuthentication)
-    permission_classes = (permissions.IsAdminUser,)  # since only admin user can view/ create companies 
+    permission_classes = (permissions.IsAdminUser,)  # since only admin user can view/ create companies
 
 
     def get(self, request):
