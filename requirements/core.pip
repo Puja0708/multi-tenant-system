@@ -4,5 +4,6 @@ django-allauth==0.37.1
 django-safedelete==0.5.1
 djangorestframework==3.8.2
 django-extensions==2.1.2
+django-rest-auth==0.9.3
 
 arrow==0.12.1
