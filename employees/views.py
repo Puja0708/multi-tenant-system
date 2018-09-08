@@ -23,7 +23,7 @@ class EmployeeViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Upda
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'profile_detail.html'
     query_set = Employee.objects.all()
-    
+
     def get_serializer(self, *args, **kwargs):
         if self.request.method == 'PUT':
             return EmployeeViewUpdateSerializer()
