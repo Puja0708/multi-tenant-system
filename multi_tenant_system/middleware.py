@@ -1,5 +1,9 @@
 from __future__ import unicode_literals, absolute_import
 
+from tenant_schemas.middleware import BaseTenantMiddleware
+from tenant_schemas.utils import get_public_schema_name
+
+
 class XHeaderTenantMiddleware(BaseTenantMiddleware):
     """
     Determines tenant by the value of the ``X-DTS-SCHEMA`` HTTP header.

@@ -43,6 +43,8 @@ SHARED_APPS = (
 TENANT_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.admin',
+    'employees',
+    'teams',
 )
 
 INSTALLED_APPS = (
@@ -65,6 +67,7 @@ TENANT_MODEL = 'companies.Company'
 
 MIDDLEWARE_CLASSES = [
     'tenant_schemas.middleware.TenantMiddleware',
+    'multi_tenant_system.middleware.XHeaderTenantMiddleware',
 ]
 
 MIDDLEWARE = [
@@ -101,14 +104,14 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',   
 )
 
-PG_EXTRA_SEARCH_PATHS = ['extensions']
+# PG_EXTRA_SEARCH_PATHS = ['extensions']
 
 WSGI_APPLICATION = 'multi_tenant_system.wsgi.application'
 
 DATABASES = {
     'default': {
         'ENGINE': 'tenant_schemas.postgresql_backend',
-        'NAME': 'multi_tenant',
+        'NAME': 'multi_tenant_db',
         'USER': '',
         'PASSWORD': '',
         'HOST': 'localhost',
@@ -157,6 +160,6 @@ USE_TZ = True
 
 SITE_ID = 1
 TENANT_USERS_DOMAIN = "example.com"
-AUTH_USER_MODEL = 'employees.Employee'
+# AUTH_USER_MODEL = 'employees.Employee'
 
 STATIC_URL = '/static/'
