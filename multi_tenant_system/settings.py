@@ -67,7 +67,7 @@ TENANT_MODEL = 'companies.Company'
 
 MIDDLEWARE_CLASSES = [
     'tenant_schemas.middleware.TenantMiddleware',
-    'multi_tenant_system.middleware.XHeaderTenantMiddleware',
+    # 'multi_tenant_system.middleware.XHeaderTenantMiddleware',
 ]
 
 MIDDLEWARE = [

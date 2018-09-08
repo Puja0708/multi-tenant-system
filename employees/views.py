@@ -10,6 +10,8 @@ from rest_framework.viewsets import GenericViewSet
 from employees.forms import CreateEmployeeForm
 from employees.models import Employee, EmployeeRoles
 from employees.serializers import EmployeeViewSerializer, EmployeeRoleSerializer
+from multi_tenant_system.helpers import get_schema_from_request
+from tenant_schemas.utils import schema_context
 
 
 class EmployeeRoleViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericViewSet):
@@ -31,8 +33,10 @@ class EmployeeViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Upda
         model_form = CreateEmployeeForm(request.POST)
         if model_form.is_valid():
             employee_data = model_form.cleaned_data
-            serializer = self.get_serializer(data=employee_data)
-            serializer.save()
+            schema_name = get_schema_from_request(request)
+            with schema_context(schema_name):
+                serializer = self.get_serializer(data=employee_data)
+                serializer.save()
             return HttpResponseRedirect('/')
         else:
             return Response({'errors': model_form.errors}, status=400)
