@@ -13,10 +13,15 @@ class EmployeeRoles(models.Model):
 
 
 class Employee(models.Model):
+    REQUIRED_FIELDS = ('gender', 'age', 'email', 'phone_number')
+    USERNAME_FIELD = 'first_name'
+    is_anonymous = False
+    is_authenticated = True
+
     role = models.ForeignKey(EmployeeRoles, models.DO_NOTHING, null=True)
     team = models.ForeignKey(Teams, models.DO_NOTHING, null=True)
     age = models.IntegerField(null=True)
-    first_name = models.CharField(max_length=14)
+    first_name = models.CharField(max_length=14, unique=True)
     last_name = models.CharField(max_length=16)
     gender = models.CharField(max_length=1, choices=EmployeesConfig.GENDER_CHOICES)
     hire_date = models.DateField()
