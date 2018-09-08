@@ -27,29 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
-# Application definition
-# SHARED_APPS = (
-#     'tenant_schemas',  # Mandatory
-#     'django.contrib.admin',
-#     'django.contrib.auth',
-#     'django.contrib.contenttypes',
-#     'django.contrib.sessions',
-#     'django.contrib.messages',
-#     'django.contrib.staticfiles',
-#     'django_extensions',
-#     'safedelete',
-#     'employees',
-#     'teams',
-# )
-
-
 SHARED_APPS = (
     'tenant_schemas',  # mandatory, should always be before any django app
     'companies', # you must list the app where your tenant model resides in
-    # 'employees',
-    # 'teams',
-
     'django.contrib.contenttypes',
 
     # everything below here is optional
@@ -79,21 +59,12 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 )
 
-
 # INSTALLED_APPS = list(SHARED_APPS) + [app for app in TENANT_APPS if app not in SHARED_APPS]
 
 TENANT_MODEL = 'companies.Company'
 
 MIDDLEWARE_CLASSES = [
     'tenant_schemas.middleware.TenantMiddleware',
-    # 'django.middleware.security.SecurityMiddleware',
-    # 'django.contrib.sessions.middleware.SessionMiddleware',
-    # 'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
-    # 'django.contrib.auth.middleware.AuthenticationMiddleware',
-    # # 'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-    # 'django.contrib.messages.middleware.MessageMiddleware',
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 MIDDLEWARE = [
@@ -102,22 +73,9 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    # 'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-# MIDDLEWARE = [
-#     'tenant_schemas.middleware.TenantMiddleware',
-#     'django.middleware.security.SecurityMiddleware',
-#     'django.contrib.sessions.middleware.SessionMiddleware',
-#     'django.middleware.common.CommonMiddleware',
-#     'django.middleware.csrf.CsrfViewMiddleware',
-#     'django.contrib.auth.middleware.AuthenticationMiddleware',
-#     # 'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-#     'django.contrib.messages.middleware.MessageMiddleware',
-#     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-# ]
 
 
 ROOT_URLCONF = 'multi_tenant_system.urls'
@@ -131,10 +89,8 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                # 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
-                # 'django.contrib.messages.context_processors.messages',
             ],
         },
     },
@@ -200,9 +156,7 @@ USE_L10N = True
 USE_TZ = True
 
 SITE_ID = 1
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.9/howto/static-files/
+TENANT_USERS_DOMAIN = "example.com"
+AUTH_USER_MODEL = 'employees.Employee'
 
 STATIC_URL = '/static/'
