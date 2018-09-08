@@ -1,17 +1,15 @@
-from rest_framework.renderers import TemplateHTMLRenderer
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from rest_framework import permissions
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.mixins import CreateModelMixin, ListModelMixin
+from rest_framework.renderers import TemplateHTMLRenderer
+from rest_framework.response import Response
+from rest_framework.viewsets import GenericViewSet
 
 from companies.forms import CreateCompanyForm
 from companies.models import Company
 from companies.serializers import CompanySerializer
-
-from rest_framework.viewsets import ModelViewSet, GenericViewSet
-from rest_framework.mixins import CreateModelMixin, UpdateModelMixin, ListModelMixin
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
-from rest_framework import permissions
 
 
 class CompanyViewSet(CreateModelMixin, ListModelMixin, GenericViewSet):
@@ -22,7 +20,6 @@ class CompanyViewSet(CreateModelMixin, ListModelMixin, GenericViewSet):
     authentication_classes = (SessionAuthentication, BasicAuthentication)
     permission_classes = (permissions.IsAdminUser,)  # since only admin user can view/ create companies
 
-
     def get(self, request):
         form = CreateCompanyForm()
         return render(request, 'profile_list.html', {'form': form})
@@ -31,11 +28,8 @@ class CompanyViewSet(CreateModelMixin, ListModelMixin, GenericViewSet):
         model_form = CreateCompanyForm(request.POST)
         if model_form.is_valid():
             company_data = model_form.cleaned_data
-            import ipdb
-            ipdb.set_trace()
             serializer = CompanySerializer(data=company_data)
-            if serializer.is_valid(raise_exception=True):
-                serializer.save()
+            serializer.save()
             return HttpResponseRedirect('/')
         else:
             return Response({'errors': model_form.errors}, status=400)

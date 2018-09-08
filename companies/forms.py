@@ -1,9 +1,9 @@
 from __future__ import unicode_literals, absolute_import
+
+from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.text import slugify
-
 from tenant_schemas.utils import schema_exists
-from django import forms
 
 
 class CreateCompanyForm(forms.Form):
@@ -17,9 +17,6 @@ class CreateCompanyForm(forms.Form):
     def clean_schema_name(self):
         schema_name = self.cleaned_data["schema_name"]
         schema_name = slugify(schema_name).replace("-", "")
-        address = self.cleaned_data["address"]
-        domain_url = self.cleaned_data["domain_url"]
-        name = self.cleaned_data["name"]
 
         if schema_exists(schema_name):
             raise ValidationError("A schema with this name already exists in the database")
