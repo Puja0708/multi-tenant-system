@@ -11,3 +11,7 @@ class Teams(models.Model):
     entry_timestamp = models.IntegerField(default=get_current_utc_timestamp)
     is_active = models.BooleanField(default=True)
     max_members = models.IntegerField(default=TeamsConfig.DEFAULT_MAX_PLAYERS_ALLOWED)
+
+    class Meta:
+        managed = True
+        db_table = 'teams'
