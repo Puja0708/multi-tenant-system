@@ -4,5 +4,5 @@ from tenant_schemas.utils import get_public_schema_name
 
 
 def get_schema_from_request(request):
-    return 't1'
-    return request.META.get('HTTP_X_DTS_SCHEMA', get_public_schema_name())  # TODO : check what it returns for public schema
+    return request.META.get('HTTP_X_DTS_SCHEMA', get_public_schema_name())
+

@@ -14,4 +14,3 @@ class Teams(models.Model):
 
     class Meta:
         managed = True
-        db_table = 'teams'
