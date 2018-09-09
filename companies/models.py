@@ -14,10 +14,11 @@ class Company(TenantMixin):
     city = models.CharField(max_length=1000, blank=True, null=True)
     pincode = models.IntegerField(null=False)
 
-    # entry_user = models.ForeignKey(null=False)  # TODO : populate using django auth
-    # modified_user = models.ForeignKey(null=True)
-
     entry_timestamp = models.IntegerField(default=get_current_utc_timestamp)  # TODO : use mixins
     modified_timestamp = models.IntegerField(null=True)
 
     auto_create_schema = True
+
+    class Meta:
+        managed = True
+        db_table = 'companies'

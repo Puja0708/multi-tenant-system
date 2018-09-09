@@ -11,6 +11,10 @@ class EmployeeRoles(models.Model):
     label = models.CharField(max_length=5)
     entry_timestamp = models.IntegerField(default=get_current_utc_timestamp)
 
+    class Meta:
+        managed = True
+        db_table = 'employee_roles'
+
 
 class Employee(models.Model):
     REQUIRED_FIELDS = ('gender', 'age', 'email', 'phone_number')
@@ -27,8 +31,8 @@ class Employee(models.Model):
     hire_date = models.DateField(null=True)
     is_active = models.BooleanField(default=True)
     display_id = models.CharField(unique=True, max_length=5)
-    email = models.CharField(max_length=50)
-    phone_number = models.IntegerField()
+    email = models.EmailField(max_length=50)
+    phone_number = models.BigIntegerField()
     entry_timestamp = models.IntegerField(default=get_current_utc_timestamp)
 
     class Meta:
