@@ -6,12 +6,12 @@ from companies.models import Company
 
 class CompanyTests(TestCase):
     def setUp(self):
-        Company.objects.create(domain_url='example.com', # don't add your port or www here!
+        Company.objects.create(domain_url='example.com',
                 schema_name='public',
                 name='test name',
                 address='test address',
                 city='blr')
-        Company.objects.create(domain_url='tenant1.example.com',  # don't add your port or www here!
+        Company.objects.create(domain_url='tenant1.example.com',
                                schema_name='tenant1',
                                name='test name',
                                address='test address',

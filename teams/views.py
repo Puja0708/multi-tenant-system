@@ -25,12 +25,15 @@ class TeamsViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, UpdateM
         return render(request, 'teams.html', {'form': form})
 
     def create(self, request, *args, **kwargs):
+        """
+        View to be used by companies to create teams.
+        Employees can join these teams afterwards.
+        TODO : authenticate company
+        """
         model_form = CreateTeamForm(request.POST)
         if model_form.is_valid():
             employee_data = model_form.cleaned_data
             schema_name = get_schema_from_request(request)
-            import ipdb
-            ipdb.set_trace()
             with schema_context(schema_name):
                 serializer = self.get_serializer(data=employee_data)
                 if serializer.is_valid():
