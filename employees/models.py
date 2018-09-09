@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 
 from employees.apps import EmployeesConfig
-from multi_tenant_system.utils import get_current_utc_timestamp, get_current_utc
+from multi_tenant_system.utils import get_current_utc_timestamp
 from teams.models import Teams
 
 
@@ -13,7 +13,6 @@ class EmployeeRoles(models.Model):
 
     class Meta:
         managed = True
-        db_table = 'employee_roles'
 
 
 class Employee(models.Model):
@@ -37,7 +36,6 @@ class Employee(models.Model):
 
     class Meta:
         managed = True
-        db_table = 'employees'
 
     def __str__(self):
         return str(self.first_name) + str(self.last_name)

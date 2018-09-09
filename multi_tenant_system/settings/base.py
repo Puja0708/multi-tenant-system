@@ -25,7 +25,7 @@ SECRET_KEY = '-^8frhm#g)uv1_x16z*c%rp%fsfnw_uijf_r_nj+n#e$bqg3!_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['example.com:8000', 'example.com', 'localhost']
+ALLOWED_HOSTS = ['example.com:8000', 'example.com', 'localhost', '127.0.0.1']
 
 SHARED_APPS = (
     'tenant_schemas',  # mandatory, should always be before any django app
@@ -67,7 +67,6 @@ TENANT_MODEL = 'companies.Company'
 
 MIDDLEWARE_CLASSES = [
     'tenant_schemas.middleware.TenantMiddleware',
-    # 'multi_tenant_system.middleware.XHeaderTenantMiddleware',
 ]
 
 MIDDLEWARE = [
@@ -83,12 +82,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'multi_tenant_system.urls'
 
+SETTINGS_PATH = os.path.normpath(os.path.dirname(__file__))
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-                os.path.join(os.path.dirname(__file__), '..', 'templates').replace('\\', '/'),
-        ],
+        'DIRS': ['templates'],
+
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -104,14 +103,14 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',   
 )
 
-# PG_EXTRA_SEARCH_PATHS = ['extensions']
+PG_EXTRA_SEARCH_PATHS = ['extensions']
 
 WSGI_APPLICATION = 'multi_tenant_system.wsgi.application'
 
 DATABASES = {
     'default': {
         'ENGINE': 'tenant_schemas.postgresql_backend',
-        'NAME': 'multi_tenant_db',
+        'NAME': 'multi_tenant',
         'USER': '',
         'PASSWORD': '',
         'HOST': 'localhost',
@@ -125,6 +124,7 @@ DATABASE_ROUTERS = (
 )
 
 DEFAULT_FILE_STORAGE = 'tenant_schemas.storage.TenantFileSystemStorage'
+PUBLIC_SCHEMA_NAME = 'public'
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
@@ -160,7 +160,6 @@ USE_TZ = True
 
 SITE_ID = 1
 TENANT_USERS_DOMAIN = "example.com"
-# AUTH_USER_MODEL = 'employees.Employee'
 
 STATIC_URL = '/static/'
 

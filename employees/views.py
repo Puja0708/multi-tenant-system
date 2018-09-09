@@ -15,8 +15,8 @@ from multi_tenant_system.helpers import get_schema_from_request
 from tenant_schemas.utils import schema_context
 
 
-class EmployeeRoleViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericViewSet):
-    query_set = EmployeeRoles.objects.all()
+class EmployeeRoleViewSet(ListModelMixin, GenericViewSet):  # not giving the delete option right now
+    queryset = EmployeeRoles.objects.all()
     serializer_class = EmployeeRoleSerializer
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'employee_roles.html'
@@ -41,17 +41,19 @@ class EmployeeRoleViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, 
 
 class EmployeeViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericViewSet):
     renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'employee_roles.html'
-    query_set = Employee.objects.all()
+    # template_name = 'employee.html'
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeRoleSerializer
+
 
     def get_serializer(self, *args, **kwargs):
         if self.request.method == 'PUT':
-            return EmployeeViewUpdateSerializer()
-        return EmployeeViewSerializer()
+            return EmployeeViewUpdateSerializer(data=self.request.POST)
+        return EmployeeViewSerializer(data=self.request.POST)
 
     def list(self, request, *args, **kwargs):
         form = CreateEmployeeForm()
-        return render(request, 'employee_roles.html', {'form': form})
+        return render(request, 'employee.html', {'form': form})
 
     def create(self, request, *args, **kwargs):
         """
@@ -67,10 +69,10 @@ class EmployeeViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, Upda
                 if serializer.is_valid(): # the form has done its bit of validation. Doing it here again because of DRF constraints
                     serializer.save()
                 else:
-                    return Response(status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+                    return render(request, 'errors.html', {'errors': serializer.errors})
             return HttpResponseRedirect('/')
         else:
-            return Response({'errors': model_form.errors}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+            return render(request, 'errors.html', {'errors': model_form.errors})
 
 
     def update(self, request, *args, **kwargs):
