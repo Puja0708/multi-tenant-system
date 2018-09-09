@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 
 from employees.apps import EmployeesConfig
-from multi_tenant_system.utils import get_current_utc_timestamp
+from multi_tenant_system.utils import get_current_utc_timestamp, get_current_utc
 from teams.models import Teams
 
 
@@ -24,7 +24,7 @@ class Employee(models.Model):
     first_name = models.CharField(max_length=14, unique=True)
     last_name = models.CharField(max_length=16)
     gender = models.CharField(max_length=1, choices=EmployeesConfig.GENDER_CHOICES)
-    hire_date = models.DateField()
+    hire_date = models.DateField(null=True)
     is_active = models.BooleanField(default=True)
     display_id = models.CharField(unique=True, max_length=5)
     email = models.CharField(max_length=50)

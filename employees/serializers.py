@@ -15,3 +15,14 @@ class EmployeeViewSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = Employee
         fields = '__all__'
+
+
+class EmployeeViewUpdateSerializer(serializers.ModelSerializer):
+    first_name = serializers.CharField(read_only=False, required=False)
+    last_name = serializers.CharField(read_only=False, required=False)
+    team = serializers.IntegerField(required=False)
+    age = serializers.IntegerField(required=False)
+
+    class Meta(object):
+        model = Employee
+        fields = '__all__'

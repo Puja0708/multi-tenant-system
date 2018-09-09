@@ -25,7 +25,7 @@ SECRET_KEY = '-^8frhm#g)uv1_x16z*c%rp%fsfnw_uijf_r_nj+n#e$bqg3!_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['example.com:8000', 'example.com', 'localhost']
 
 SHARED_APPS = (
     'tenant_schemas',  # mandatory, should always be before any django app
@@ -163,3 +163,4 @@ TENANT_USERS_DOMAIN = "example.com"
 # AUTH_USER_MODEL = 'employees.Employee'
 
 STATIC_URL = '/static/'
+

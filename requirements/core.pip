@@ -7,3 +7,4 @@ django-extensions==2.1.2
 django-rest-auth==0.9.3
 
 arrow==0.12.1
+pytest
