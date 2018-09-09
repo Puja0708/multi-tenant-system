@@ -38,3 +38,8 @@ You can create tenants from the django admin console.
     ```
          ./manage.py test employees.tests --settings=multi_tenant_system.settings.dev
     ```
+
+
+TODO :
+    - auth for companies, employees etc (use DRF authentication_classes and permission_classes.
+    - api tests
