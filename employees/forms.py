@@ -6,7 +6,7 @@ from employees.apps import EmployeesConfig
 from employees.models import Employee, EmployeeRoles
 
 
-class CreateEmployeeForm(forms.Form):
+class EmployeeForm(forms.ModelForm):
     first_name = forms.CharField(required=True)
     last_name = forms.CharField(required=True)
     role = forms.IntegerField(required=False)
@@ -18,15 +18,12 @@ class CreateEmployeeForm(forms.Form):
     email = forms.EmailField(required=True)
     phone_number = forms.IntegerField(required=True)
 
-
-class UpdateEmployeeForm(forms.Form):
-    role = forms.IntegerField(required=False)
-    team = forms.IntegerField(required=False)
-    age = forms.IntegerField(required=False)
-    is_active = forms.BooleanField(required=False)
+    class Meta:
+        model = Employee
+        fields = '__all__'
 
 
-class CreateEmployeeRoleForm(forms.Form):
+class CreateEmployeeRoleForm(forms.ModelForm):
     label = forms.CharField(required=True)
 
     class Meta:

@@ -30,8 +30,8 @@ class Employee(models.Model):
     hire_date = models.DateField(null=True)
     is_active = models.BooleanField(default=True)
     display_id = models.CharField(unique=True, max_length=5)
-    email = models.EmailField(max_length=50)
-    phone_number = models.BigIntegerField()
+    email = models.EmailField(max_length=50, unique=True)
+    phone_number = models.BigIntegerField(null=False, unique=True)
     entry_timestamp = models.IntegerField(default=get_current_utc_timestamp)
 
     class Meta:
