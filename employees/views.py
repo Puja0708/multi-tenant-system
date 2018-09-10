@@ -23,18 +23,13 @@ class EmployeeRoleViewSet(ModelViewSet):  # not giving the delete option right n
         TODO : authenticate company
         """
         model_form = CreateEmployeeRoleForm(request.POST)
-        if model_form.is_valid():
-            employee_data = model_form.cleaned_data
-            schema_name = get_schema_from_request(request)
-            with schema_context(schema_name):
-                serializer = self.get_serializer(data=employee_data)
-                if serializer.is_valid():  # the form has done its bit of validation. Doing it here again because of DRF constraints
-                    serializer.save()
-                    return render(request, 'success.html', {'data': employee_data})
-                else:
-                    return render(request, 'errors.html', {'error': serializer.errors})
-        else:
-            return render(request, 'errors.html', {'error': model_form.errors})
+        schema_name = get_schema_from_request(request)
+        with schema_context(schema_name):
+            if model_form.is_valid():
+                model_form.save()
+                return render(request, 'success.html', {'data': model_form.cleaned_data})
+            else:
+                return render(request, 'errors.html', {'error': model_form.errors})
 
 
 class EmployeeViewSet(ModelViewSet):
@@ -61,9 +56,8 @@ class EmployeeViewSet(ModelViewSet):
         schema_name = get_schema_from_request(request)
         with schema_context(schema_name):
             if model_form.is_valid():
-                employee_data = model_form.cleaned_data
                 model_form.save()
-                return render(request, 'success.html', {'data': employee_data})
+                return render(request, 'success.html', {'data': model_form.cleaned_data})
             else:
                 return render(request, 'errors.html', {'errors': model_form.errors})
 
@@ -74,11 +68,10 @@ class EmployeeViewSet(ModelViewSet):
         TODO : authenticate company/employee
         """
         model_form = EmployeeForm(request.data)
-        if model_form.is_valid():
-            employee_data = model_form.cleaned_data
-            schema_name = get_schema_from_request(request)
-            with schema_context(schema_name):
+        schema_name = get_schema_from_request(request)
+        with schema_context(schema_name):
+            if model_form.is_valid():
                 model_form.save()
-                return render(request, 'success.html', {'data': employee_data})
-        else:
-            return render(request, 'errors.html', {'error': model_form.errors})
+                return render(request, 'success.html', {'data': model_form.cleaned_data})
+            else:
+                return render(request, 'errors.html', {'error': model_form.errors})

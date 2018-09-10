@@ -1,9 +1,8 @@
 from __future__ import unicode_literals, absolute_import
 
 from django.shortcuts import render
-from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, ListModelMixin, UpdateModelMixin
 from rest_framework.renderers import TemplateHTMLRenderer
-from rest_framework.viewsets import GenericViewSet
+from rest_framework.viewsets import ModelViewSet
 from tenant_schemas.utils import schema_context
 
 from multi_tenant_system.helpers import get_schema_from_request
@@ -12,7 +11,7 @@ from teams.models import Teams
 from teams.serializers import TeamsSerializer
 
 
-class TeamsViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericViewSet):
+class TeamsViewSet(ModelViewSet):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'teams.html'
     query_set = Teams.objects.all()
@@ -29,15 +28,10 @@ class TeamsViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, UpdateM
         TODO : authenticate company
         """
         model_form = CreateTeamForm(request.POST)
-        if model_form.is_valid():
-            employee_data = model_form.cleaned_data
-            schema_name = get_schema_from_request(request)
-            with schema_context(schema_name):
-                serializer = self.get_serializer(data=employee_data)
-                if serializer.is_valid():
-                    serializer.save()
-                    return render(request, 'errors.html', {'error': serializer.errors})
-                else:
-                    return render(request, 'errors.html', {'error': serializer.errors})
-        else:
-            return render(request, 'errors.html', {'error': model_form.errors})
+        schema_name = get_schema_from_request(request)
+        with schema_context(schema_name):
+            if model_form.is_valid():
+                model_form.save()
+                return render(request, 'success.html', {'error': model_form.cleaned_data})
+            else:
+                return render(request, 'errors.html', {'error': model_form.errors})
