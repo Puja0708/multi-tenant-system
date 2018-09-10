@@ -68,7 +68,8 @@ class EmployeeViewSet(ModelViewSet):
                 else:
                     return render(request, 'errors.html', {'error': serializer.errors})
         else:
-            return render(request, 'errors.html', {'error': model_form.errors})
+            return render(request, 'errors.html', {'errors': model_form.errors})
+
 
     def update(self, request, *args, **kwargs):
         """

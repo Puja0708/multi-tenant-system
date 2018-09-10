@@ -34,8 +34,7 @@
 
 7. Create Employee Roles and Teams (using shell or their corresponding APIs/ Forms.
 
-8. Create Employee.
-
+8. Create Employee (`/employees`)
 
 Now you can play around with this. In this project, `companies.models.Company` is the main tenant model.
 You can create tenants from the django admin console.
@@ -46,11 +45,15 @@ You can create tenants from the django admin console.
     ```
 
 
+<<<<<<< HEAD
 7. ## TESTING TENANCT ON LOCAL W/O A DOMAIN :
+=======
+7. ## TESTING TENANTS ON LOCAL (W/O A DOMAIN) :
+>>>>>>> fc7a5c24747754e98cbfd4fb7b8a24e2cafade12
     - make an entry in the `/etc/hosts/` file mapping your localhost to a fake domain.
         eg : `127.0.0.1 example.com tenant1.example.com tenant2.example.com`.
 
 
 TODO :
-    - auth for companies, employees etc (use DRF authentication_classes and permission_classes.
+    - auth for companies, employees etc (use DRF authentication_classes and permission_classes.)
     - api tests
