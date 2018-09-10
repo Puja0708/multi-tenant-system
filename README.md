@@ -34,7 +34,7 @@
 
 7. Create Employee Roles and Teams (using shell or their corresponding APIs/ Forms.
 
-8. Create Employee.  
+8. Create Employee.
 
 
 Now you can play around with this. In this project, `companies.models.Company` is the main tenant model.
