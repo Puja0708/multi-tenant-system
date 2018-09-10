@@ -1,10 +1,8 @@
 from __future__ import unicode_literals, absolute_import
 
-from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, ListModelMixin, UpdateModelMixin
 from rest_framework.renderers import TemplateHTMLRenderer
-from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 from tenant_schemas.utils import schema_context
 
@@ -38,8 +36,8 @@ class TeamsViewSet(CreateModelMixin, RetrieveModelMixin, ListModelMixin, UpdateM
                 serializer = self.get_serializer(data=employee_data)
                 if serializer.is_valid():
                     serializer.save()
+                    return render(request, 'errors.html', {'error': serializer.errors})
                 else:
-                    raise Response(status=422)
-            return HttpResponseRedirect('/')
+                    return render(request, 'errors.html', {'error': serializer.errors})
         else:
-            return Response({'errors': model_form.errors}, status=422)
+            return render(request, 'errors.html', {'error': model_form.errors})
